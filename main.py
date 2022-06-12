@@ -1,16 +1,30 @@
-# This is a sample Python script.
+from kivy.core.window import Window
+from kivy.properties import ObjectProperty
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+from data_parcing_functions import get_chat_data
+
+from kivy.app import App
+from kivy.uix.widget import Widget
+from kivy.lang import Builder
+
+#Set the app size
+Window.size = (500, 700)
+
+#Прямое указание, какой файл дизайна использовать
+Builder.load_file('tg_chat_history_reader.kv')
+
+class MyLayout(Widget):
+    chat_data = get_chat_data(f"ChatOpenSource/messages.html")
+    def start_button_click(self):
+        self.ids.post_datetime.text = f"Пост был опубликован: {self.chat_data[0].get('post_datetime')}"
+        self.ids.post_text.text = f"{self.chat_data[0].get('post_text')}"
+        self.ids.post_index.text = f"{0}"
 
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+class AwesomeApp(App):
+    def build(self):
+        # Window.clearcolor = (1, 1, 1, 1)
+        return MyLayout()
 
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+if __name__=="__main__":
+    AwesomeApp().run()

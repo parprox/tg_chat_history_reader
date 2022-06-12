@@ -1,0 +1,43 @@
+<MyLayout>
+    post_datetime: post_datetime
+    post_text: post_text
+    post_index: post_index
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+
+        GridLayout:
+            size_hint: (1, 0.2)
+            cols: 2
+            Label:
+                id: post_datetime
+                font_size: 20
+                text: "Пост был опубликован: 00:00 00.00.0000"
+            Button:
+                text: "Start"
+                size_hint: (0.3, 1)
+                on_press: root.start_button_click()
+
+
+        TextInput:
+            id: post_text
+
+        GridLayout:
+            size_hint: (1, 0.2)
+            cols: 3
+            Button:
+                text: 'Назад'
+                font_size: 20
+                on_press: root.back_button.click()
+
+            Label:
+                size_hint: (0.2, 1)
+                id: post_index
+                text: '-'
+
+            Button:
+                text: 'Вперёд'
+                font_size: 20
+                on_press: root.forward_button.click()
+
