@@ -1,7 +1,38 @@
-<MyLayout>
-    post_datetime: post_datetime
-    post_text: post_text
-    post_index: post_index
+
+<FileChooseWindow>:
+    id: file_finder
+    name: "file_choose"
+
+    BoxLayout:
+        orientation: "vertical"
+
+        FileChooserIconView:
+            id: filechooser
+            on_selection: file_finder.selected(filechooser.selection)
+
+        GridLayout:
+            size_hint: (1, 0.2)
+            cols: 2
+
+            Label:
+                id: filechooser_label
+                size_hint: (0.7, 1)
+                text: "Выберите подходящий файл"
+                text_size: self.size
+                halign: "center"
+                valign: "middle"
+                font_size: 20
+
+            Button:
+                text: "Читать"
+                size_hint: (0.3, 1)
+                on_release:
+                    app.root.current = "reader"
+                    root.manager.transition.direction = "right"
+
+
+<ReaderWindow>:
+    name: "reader"
 
     BoxLayout:
         orientation: "vertical"
@@ -13,15 +44,19 @@
             Label:
                 id: post_datetime
                 font_size: 20
-                text: "Пост был опубликован: 00:00 00.00.0000"
+                text: "Пост был опубликован:\n 00:00 00.00.0000"
             Button:
-                text: "Start"
+                text: "Выбрать файл \n для чтения"
                 size_hint: (0.3, 1)
-                on_press: root.start_button_click()
+                on_release:
+                    app.root.current = "file_choose"
+                    root.manager.transition.direction = "left"
 
-
-        TextInput:
-            id: post_text
+        ScrollView:
+            TextInput:
+                id: post_text
+                size_hint: 1, None
+                height: self.minimum_height
 
         GridLayout:
             size_hint: (1, 0.2)
@@ -29,7 +64,7 @@
             Button:
                 text: 'Назад'
                 font_size: 20
-                on_press: root.back_button.click()
+                on_press: root.back_button_click()
 
             Label:
                 size_hint: (0.2, 1)
@@ -39,5 +74,5 @@
             Button:
                 text: 'Вперёд'
                 font_size: 20
-                on_press: root.forward_button.click()
+                on_press: root.forward_button_click()
 
